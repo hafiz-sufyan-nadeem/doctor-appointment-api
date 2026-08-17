@@ -10,3 +10,6 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::put('/update-profile', [\App\Http\Controllers\Api\DoctorController::class, 'updateProfile'])->middleware('auth:sanctum');
+Route::get('/doctors', [\App\Http\Controllers\Api\DoctorController::class, 'index']);

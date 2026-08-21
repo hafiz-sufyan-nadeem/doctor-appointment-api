@@ -11,7 +11,7 @@ class AvailabilityController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'day' => 'required|in:Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday',
+            'day' => 'required|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
             'startTime' => 'required',
             'endTime' => 'required',
         ]);
@@ -28,5 +28,14 @@ class AvailabilityController extends Controller
         return response()->json([
            'availability' => $availability,
         ],201);
+    }
+
+    public function index($id)
+    {
+        $availabilities = Availability::where('doctor_id', $id)->get();
+
+        return response()->json([
+           'availabilities' => $availabilities,
+        ]);
     }
 }

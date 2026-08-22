@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
@@ -28,4 +29,17 @@ class AppointmentController extends Controller
             'appointment' => $appointment,
         ], 201);
     }
+
+   public function myAppointments(Request $request)
+   {
+       $user = $request->user();
+       if ($user->role === UserRole::Patient) {
+           $appointments = Appointment::where('patient_id', $user->id)->with('doctor')->get();
+       }else {
+           $appointments = Appointment::where('doctor_id', $user->doctorProfile->id)->with('patient')->get();
+       }
+       return response()->json([
+           'appointments' => $appointments,
+       ]);
+   }
 }

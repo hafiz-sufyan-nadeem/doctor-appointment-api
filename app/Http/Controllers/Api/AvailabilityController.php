@@ -18,6 +18,12 @@ class AvailabilityController extends Controller
 
         $doctorProfile = $request->user()->doctorProfile;
 
+        if (! $doctorProfile) {
+            return response()->json([
+                'message' => 'Please complete your doctor profile before adding availability.',
+            ], 422);
+        }
+
         $availability = Availability::create([
             'doctor_id' => $doctorProfile->id,
             'day' => $validated['day'],
@@ -26,8 +32,8 @@ class AvailabilityController extends Controller
         ]);
 
         return response()->json([
-           'availability' => $availability,
-        ],201);
+            'availability' => $availability,
+        ], 201);
     }
 
     public function index($id)

@@ -16,3 +16,5 @@ Route::get('/doctors', [\App\Http\Controllers\Api\DoctorController::class, 'inde
 
 Route::post('/doctors/availability', [\App\Http\Controllers\Api\AvailabilityController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/doctors/{id}/availability', [\App\Http\Controllers\Api\AvailabilityController::class, 'index']);
+
+Route::post('/appointments', [\App\Http\Controllers\Api\AppointmentController::class, 'store'])->middleware('auth:sanctum');
